@@ -1,2 +1,2 @@
 # blog.dexi.rocks
-Personal blog for everything I do want to post, basically
+Essentially a custom theme for Eleventy running on GitHub Pages.
