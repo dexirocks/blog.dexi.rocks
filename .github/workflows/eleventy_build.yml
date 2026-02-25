@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  build-deploy:
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     concurrency:
@@ -22,19 +22,7 @@ jobs:
           node-version: '24'
           check-latest: true
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - run: npm ci
-      - run: npm run build
-
-      - name: Build
-        run: "npx @11ty/eleventy --input ./src"
+      - run: "npx @11ty/eleventy --input ./src"
       
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
