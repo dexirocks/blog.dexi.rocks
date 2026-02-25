@@ -15,8 +15,10 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@master
+      - name: Install npm
+        uses: actions/setup-node@v4
       - name: Build
-        uses: TartanLlama/actions-eleventy@master
+        run: "npx @11ty/eleventy --input ./src"
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
