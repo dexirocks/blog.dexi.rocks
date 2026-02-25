@@ -14,11 +14,28 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
+
       - name: Install npm
         uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          check-latest: true
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+      - run: npm run build
+
       - name: Build
         run: "npx @11ty/eleventy --input ./src"
+      
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
