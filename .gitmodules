@@ -1,0 +1,3 @@
+[submodule "src/dexi-styles"]
+	path = src/dexi-styles
+	url = https://github.com/dexirocks/dexi-styles
